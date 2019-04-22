@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Add Edit Remove HTML Table Row</title>
+        <meta charset="windows-1252">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <style>
+            
+            .container{overflow: hidden}
+            .tab{float: left;}
+            .tab-2{margin-left: 50px}
+            .tab-2 input{display: block;margin-bottom: 10px}
+            tr{transition:all .25s ease-in-out}
+            tr:hover{background-color:#EEE;cursor: pointer}
+            
+        </style>
+        
+    </head>
+    <body>
+        
+        <div class="container">
+            <div class="tab tab-1">
+                <table id="table" border="1">
+                    <tr>
+                        <th>First Name</th>
+                        <th>ContactNumber</th>
+                        <th>Age</th>
+                    </tr>
+                </table>
+            </div>
+            <div class="tab tab-2">
+                First Name :<input type="text" name="fname" id="fname">
+                Contact Number :<input type="text" name="contact" id="contact">
+                Age :<input type="number" name="age" id="age">
+                
+                <button onclick="submit();">Submit</button>
+                <button onclick="edit();">Edit</button>
+                <button onclick="removeSelectedRow();">Delete</button>
+            </div>
+        </div>
+        
+        <script>
+            
+            var rIndex;
+            var  table = document.getElementById("table");
+            var  tchecl = 123;
+            var hello  = 1133;
+            
+            function checkEmptyInput()
+            {
+                var isEmpty = false,
+                    fname = document.getElementById("fname").value,
+                    contact = document.getElementById("contact").value,
+                    age = document.getElementById("age").value;
+            
+                if(fname === ""){
+                    alert("First Name Connot Be Empty");
+                    isEmpty = true;
+                }
+                else if(contact === ""){
+                    alert("contactnumber Connot Be Empty");
+                    isEmpty = true;
+                }
+                else if(age === ""){
+                    alert("Age Connot Be Empty");
+                    isEmpty = true;
+                }
+                return isEmpty;
+            }
+            
+            
+            // add Row
+            function submit()
+            {
+                if(!checkEmptyInput()){
+                var newRow = table.insertRow(table.length),
+                    cell1 = newRow.insertCell(0),
+                    cell2 = newRow.insertCell(1),
+                    cell3 = newRow.insertCell(2),
+                    fname = document.getElementById("fname").value,
+                    contact = document.getElementById("contact").value,
+                    age = document.getElementById("age").value;
+            
+                cell1.innerHTML = fname;
+                cell2.innerHTML = contact;
+                cell3.innerHTML = age;
+            }
+            }
+            
+            
+            function edit()
+            {
+                var fname = document.getElementById("fname").value,
+                    lname = document.getElementById("contact").value,
+                    age = document.getElementById("age").value;
+               if(!checkEmptyInput()){
+                table.rows[rIndex].cells[0].innerHTML = fname;
+                table.rows[rIndex].cells[1].innerHTML = contact;
+                table.rows[rIndex].cells[2].innerHTML = age;
+              }
+            }
+            
+            function removeSelectedRow()
+            {
+                debugger;
+                table.deleteRow(rIndex);
+                // clear input text
+                document.getElementById("fname").value = "";
+                document.getElementById("contact").value = "";
+                document.getElementById("age").value = "";
+            }
+        </script>
+        
+    </body>
+</html>
