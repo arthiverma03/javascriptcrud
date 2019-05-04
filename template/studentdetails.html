@@ -1,0 +1,177 @@
+<html>
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+    integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+    integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+    crossorigin="anonymous"></script>
+ 
+</head>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6">
+        <h2>Students Information</h2>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <table id="studentInfo" class="table table-bordered table-condensed table-striped">
+          <thead>
+            <tr>
+              <th >Student Name</th>
+              <th >Age</th>
+              <th>Delete</th>
+              <th>Edit </th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div>
+      First name: <input type="text"  id="name"><br>
+      Age: <input type="text" id="age" ><br>
+      <button type="button" id="updateButton"
+        class="btn btn-primary"
+        onclick="productUpdate();">
+  Add
+</button>
+
+  </div>
+  <script>
+    var _row = null;
+var _nextId = 1;
+var _activeId = 0;
+    $(document).ready(function () {
+  productsAdd();
+});
+
+function productsAdd() {
+  if ($("#studentInfo tbody").length == 0) {
+      $("#studentInfo").append("<tbody></tbody>");
+    }
+      
+    // Append product to the table
+    $("#studentInfo tbody").append(
+      "<tr>" +
+        "<td>Arthi verma</td>" +            
+        "<td>25</td>" +
+      "</tr>"
+      );
+    $("#studentInfo tbody").append(
+      "<tr>" +
+        "<td>Dhanoo Verma</td>" +          
+        "<td>26</td>" +
+      "</tr>"
+      );
+  }
+
+  function productUpdate() {
+  if ($("#updateButton").text() == "Update") {
+    productUpdateInTable();
+  }
+  else {
+    productAddToTable();
+  }
+  // Clear form fields
+  formClear();
+  // Focus to product name field
+  $("#name").focus();
+}
+function productUpdateInTable() {
+ // Add changed product to table
+ $(_row).after(productBuildTableRow());
+  // Remove old product row
+  $(_row).remove();
+  // Clear form fields
+  formClear();
+  // Change Update Button Text
+  $("#updateButton").text("Add");
+}
+function productBuildTableRow() {
+  var ret =
+  "<tr>" +
+   
+    "<td>" + $("#name").val() + "</td>" +
+    "<td>" + $("#age").val() + "</td>" +
+    "<td>" +
+      "<button type='button' " +
+              "onclick='productDelete(this);' " +
+              "class='btn btn-default'>" +
+              "<span class='glyphicon glyphicon-remove' />" +
+      "</button>" +
+    "</td>" +
+    "<td>" +
+      "<button type='button' " +
+              "onclick='productDisplay(this);' " +
+              "class='btn btn-default'>" +
+              "<span class='glyphicon glyphicon-edit' />" +
+      "</button>" +
+    "</td>" +
+  "</tr>"
+      
+  return ret;
+}
+
+function productAddToTable() {
+  // First check if a <tbody> tag exists, add one if not
+  if ($("#studentInfo tbody").length == 0) {
+    $("#studentInfo").append("<tbody></tbody>");
+  }
+      
+  // Append product to the table
+  $("#studentInfo tbody").append(
+    "<tr>" +
+      "<td>" + $("#name").val() + "</td>" +
+      "<td>" + $("#age").val() + "</td>" +
+      "<td>" +
+        "<button type='button' " +
+                "onclick='productDelete(this);' " +
+                "class='btn btn-default'>" +
+                "<span class='glyphicon  glyphicon-remove' />" +
+                             
+        "</button>" +
+      "</td>" +
+      "<td>" +
+        "<button type='button' " +
+              "onclick='productDisplay(this);' " +
+              "class='btn btn-default'>" +
+              "<span class='glyphicon glyphicon-edit' />" +
+      "</button>" +
+      "</td>" +
+    "</tr>"
+  );
+}
+function productDisplay(ctl) {
+  _row = $(ctl).parents("tr");
+  var cols = _row.children("td");
+  $("#name").val($(cols[1]).text());
+  $("#age").val($(cols[2]).text());
+  // Change Update Button Text
+  $("#updateButton").text("Update");
+}
+
+function productDelete(ctl) {
+  $(ctl).parents("tr").remove();
+}
+
+function formClear() {
+  $("#name").val("");
+  $("#age").val("");;
+}
+ </script>
+    
+</body>
+
+</html>
